@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>ImplantaTrack | Controle de Implantação</title>
+    <title>ImplantaTrack | Clique no ícone para concluir a fase</title>
     <style>
         * {
             margin: 0;
@@ -11,18 +11,14 @@
             box-sizing: border-box;
             font-family: system-ui, 'Segoe UI', 'Inter', 'Roboto', sans-serif;
         }
-
         body {
             background: #f0f2f5;
             padding: 24px 16px;
         }
-
         .container {
             max-width: 1400px;
             margin: 0 auto;
         }
-
-        /* Header */
         .header {
             background: linear-gradient(135deg, #0b2b3b 0%, #1a4c5e 100%);
             border-radius: 28px;
@@ -34,7 +30,6 @@
         .header h1 {
             font-size: 1.8rem;
             font-weight: 600;
-            letter-spacing: -0.3px;
             display: flex;
             align-items: center;
             gap: 10px;
@@ -44,8 +39,6 @@
             margin-top: 8px;
             font-size: 0.9rem;
         }
-
-        /* Tabs */
         .tabs {
             display: flex;
             flex-wrap: wrap;
@@ -72,8 +65,6 @@
         .tab-btn:hover:not(.active) {
             background: #e2e8f0;
         }
-
-        /* Cards dashboard */
         .dashboard-cards {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -86,7 +77,6 @@
             padding: 20px 16px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.05);
             text-align: center;
-            transition: 0.2s;
             border: 1px solid #e2edf2;
         }
         .card h3 {
@@ -94,7 +84,6 @@
             text-transform: uppercase;
             font-weight: 600;
             color: #4b6a7c;
-            letter-spacing: 0.5px;
         }
         .card .value {
             font-size: 2.6rem;
@@ -102,18 +91,12 @@
             color: #0f3b3b;
             margin: 10px 0 4px;
         }
-        .card .sub {
-            font-size: 0.75rem;
-            color: #5e7e8f;
-        }
-
-        /* Tabelas responsivas */
         .table-wrapper {
             overflow-x: auto;
             background: white;
             border-radius: 24px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-            padding: 0px;
+            padding: 0;
             margin-bottom: 28px;
             border: 1px solid #e9eef3;
         }
@@ -126,7 +109,7 @@
         th {
             background: #f4f9fc;
             padding: 14px 8px;
-            text-align: left;
+            text-align: center;
             font-weight: 600;
             color: #1c4e5e;
             border-bottom: 1px solid #dce5ec;
@@ -135,6 +118,10 @@
             padding: 12px 8px;
             border-bottom: 1px solid #ecf3f8;
             vertical-align: middle;
+            text-align: center;
+        }
+        td:first-child, td:nth-child(2), td:nth-child(3) {
+            text-align: left;
         }
         .badge {
             display: inline-block;
@@ -143,42 +130,45 @@
             font-size: 0.75rem;
             font-weight: 600;
         }
-        .badge.red {
-            background: #ffe6e5;
-            color: #bc1c2e;
-        }
-        .badge.yellow {
-            background: #fff2db;
-            color: #b45f06;
-        }
-        .badge.green {
-            background: #e0f7ea;
-            color: #0e6b3e;
-        }
-        .badge.blue {
-            background: #e3f2fd;
-            color: #0a5e7c;
-        }
+        .badge.red { background: #ffe6e5; color: #bc1c2e; }
+        .badge.yellow { background: #fff2db; color: #b45f06; }
+        .badge.green { background: #e0f7ea; color: #0e6b3e; }
         .progress-bar {
             background: #e2e8f0;
             border-radius: 40px;
             height: 8px;
-            width: 80px;
+            width: 100px;
             overflow: hidden;
+            margin: 4px auto;
         }
         .progress-fill {
             background: #1e6f5c;
             height: 100%;
-            border-radius: 40px;
             width: 0%;
+        }
+        .data-fase {
+            font-weight: 500;
+            display: block;
+            margin-bottom: 6px;
+        }
+        .fase-status {
+            cursor: pointer;
+            display: inline-block;
+            font-size: 1.1rem;
+            padding: 4px 8px;
+            background: #f8fafc;
+            border-radius: 40px;
+            transition: 0.1s;
+        }
+        .fase-status:hover {
+            background: #e2e8f0;
+            transform: scale(1.02);
         }
         button {
             background: none;
             border: none;
             cursor: pointer;
-            font-size: 1.15rem;
-            margin: 0 4px;
-            transition: 0.1s;
+            font-size: 1rem;
             padding: 6px;
             border-radius: 40px;
         }
@@ -186,9 +176,6 @@
             background: #f0f4f9;
             padding: 6px 10px;
             font-size: 0.8rem;
-        }
-        .btn-icon:hover {
-            background: #e2eaf1;
         }
         .btn-primary {
             background: #1e6f5c;
@@ -202,6 +189,11 @@
             background: white;
             padding: 6px 14px;
             border-radius: 30px;
+        }
+        .btn-small {
+            font-size: 0.7rem;
+            padding: 4px 8px;
+            margin-left: 6px;
         }
         .config-group {
             background: white;
@@ -219,10 +211,6 @@
             display: flex;
             flex-direction: column;
             gap: 6px;
-        }
-        .field label {
-            font-weight: 600;
-            color: #265e6e;
         }
         input, textarea {
             padding: 10px 12px;
@@ -252,20 +240,6 @@
             justify-content: flex-end;
             margin-top: 20px;
         }
-        .status-text {
-            font-weight: 600;
-        }
-        .action-group {
-            display: flex;
-            gap: 6px;
-            flex-wrap: wrap;
-        }
-        .btn-danger {
-            color: #bc1c2e;
-        }
-        .btn-success {
-            color: #0e6b3e;
-        }
         footer {
             text-align: center;
             font-size: 0.7rem;
@@ -277,169 +251,128 @@
 <body>
 <div class="container">
     <div class="header">
-        <h1>🚀 ImplantaTrack</h1>
-        <p>Controle de implantações • fases automáticas • status dinâmico • gestão de cancelados e concluídos</p>
+        <h1>📋 ImplantaTrack</h1>
+        <p>✔️ Clique no ícone ✅ / ⬜ dentro de cada fase para marcar como concluído. O progresso é atualizado automaticamente.</p>
     </div>
 
     <div class="tabs" id="tabBar">
         <button class="tab-btn active" data-tab="dashboard">📊 Dashboard</button>
         <button class="tab-btn" data-tab="active">📋 Clientes Ativos</button>
-        <button class="tab-btn" data-tab="completed">✅ Implantações Concluídas</button>
-        <button class="tab-btn" data-tab="cancelled">❌ Clientes Cancelados</button>
-        <button class="tab-btn" data-tab="settings">⚙️ Configurações</button>
+        <button class="tab-btn" data-tab="completed">✅ Concluídos</button>
+        <button class="tab-btn" data-tab="cancelled">❌ Cancelados</button>
+        <button class="tab-btn" data-tab="settings">⚙️ Prazos</button>
     </div>
 
     <div id="dashboardTab" class="tab-content">
         <div class="dashboard-cards" id="dashboardCards"></div>
         <div class="table-wrapper">
             <h3 style="padding: 16px 16px 0 16px;">📌 Resumo por fase (clientes ativos)</h3>
-            <table id="resumoFasesTable">
-                <thead><tr><th>Fase</th><th>Vencidos</th><th>Em breve (7d)</th><th>No prazo</th><th>Total na fase</th></tr></thead>
-                <tbody></tbody>
-            </table>
+            <table id="resumoFasesTable"><thead><tr><th>Fase</th><th>Vencidos</th><th>Em breve (7d)</th><th>No prazo</th><th>Total</th></tr></thead><tbody></tbody></table>
         </div>
     </div>
 
     <div id="activeTab" class="tab-content" style="display:none;">
         <div style="display: flex; justify-content: space-between; margin-bottom: 16px; flex-wrap: wrap; gap: 10px;">
             <button class="btn-primary" id="btnNovoCliente">+ Novo Cliente</button>
-            <button class="btn-outline" id="btnImportExemplo">📋 Carregar clientes exemplo</button>
+            <button class="btn-outline" id="btnImportExemplo">📋 Carregar exemplos</button>
         </div>
         <div class="table-wrapper" id="activeTableWrapper"></div>
     </div>
 
-    <div id="completedTab" class="tab-content" style="display:none;">
-        <div class="table-wrapper" id="completedTableWrapper"></div>
-    </div>
-
-    <div id="cancelledTab" class="tab-content" style="display:none;">
-        <div class="table-wrapper" id="cancelledTableWrapper"></div>
-    </div>
-
+    <div id="completedTab" class="tab-content" style="display:none;"><div class="table-wrapper" id="completedTableWrapper"></div></div>
+    <div id="cancelledTab" class="tab-content" style="display:none;"><div class="table-wrapper" id="cancelledTableWrapper"></div></div>
     <div id="settingsTab" class="tab-content" style="display:none;">
         <div class="config-group">
-            <h3>⏱️ Prazos por fase (dias corridos após fase anterior)</h3>
+            <h3>⏱️ Prazos por fase (dias após a anterior)</h3>
             <div class="config-grid" id="configFields"></div>
-            <button class="btn-primary" id="saveConfigBtn">Salvar prazos & recalcular todos os clientes</button>
-            <p style="margin-top: 16px; font-size:0.8rem;">⚠️ Altere os dias e clique em salvar. Todas as datas de clientes ativos serão recalculadas automaticamente.</p>
+            <button class="btn-primary" id="saveConfigBtn">Salvar prazos & recalcular</button>
         </div>
     </div>
-    <footer>ImplantaTrack • dados salvos no navegador • cliente desistente vai para cancelados • concluídos movidos para histórico</footer>
+    <footer>🔘 Clique no ícone ✅/⬜ para concluir uma fase. ✅ = treinamento realizado.</footer>
 </div>
 
-<!-- Modal Novo/Editar Cliente -->
 <div id="clienteModal" class="modal">
     <div class="modal-content">
         <h3 id="modalTitle">Novo Cliente</h3>
         <input type="hidden" id="editClientId">
-        <div class="field"><label>Nome do Cliente *</label><input type="text" id="clienteNome" placeholder="Ex: Festas & CIA"></div>
+        <div class="field"><label>Nome *</label><input type="text" id="clienteNome" placeholder="Ex: Festas & CIA"></div>
         <div class="field"><label>Data de Entrada *</label><input type="date" id="clienteDataEntrada"></div>
-        <div class="field"><label>Observações / Comentários</label><textarea id="clienteObs" rows="2" placeholder="Informações relevantes..."></textarea></div>
+        <div class="field"><label>Observações</label><textarea id="clienteObs" rows="2"></textarea></div>
         <div class="flex-btns"><button class="btn-outline" id="modalCancel">Cancelar</button><button class="btn-primary" id="modalConfirm">Salvar</button></div>
     </div>
 </div>
 
 <script>
-    // ---------- CONFIGURAÇÕES PADRÃO ----------
-    const DEFAULT_DAYS = [7, 5, 10, 15, 10, 3];  // conforme Excel: Término+Trein.Com, Trein.Com, Trein.Fin, Ficha Técnica, Lista Compras, Impl Checklist
+    // ---------- CONFIG ----------
     const FASE_NAMES = [
-        "Término+Trein.Comercial",
+        "Término+Trein.Com",
         "Treinamento Comercial",
         "Treinamento Financeiro",
-        "Ficha Técnica / Produtos",
-        "Treinamento Lista Compras",
-        "Implantação Checklist"
+        "Ficha Técnica",
+        "Lista Compras",
+        "Impl.Checklist"
     ];
+    let configDias = [7,5,10,15,10,3];
+    let clientes = [];
 
-    let configDias = [...DEFAULT_DAYS];
-    let clientes = [];   // cada cliente: { id, nome, dataEntrada, obs, situacao: 'active'/'completed'/'cancelled', datasFases, progresso, statusText }
+    // helpers
+    function addDays(date, days) { let d = new Date(date); d.setDate(d.getDate() + days); return d; }
+    function formatDate(d) { if(!d) return ""; return new Date(d).toLocaleDateString('pt-BR'); }
+    function todayMidnight() { let t = new Date(); t.setHours(0,0,0,0); return t; }
 
-    // helpers datas
-    function addDays(date, days) {
-        let d = new Date(date);
-        d.setDate(d.getDate() + days);
-        return d;
-    }
-    function formatDate(dateObj) {
-        if(!dateObj) return "";
-        let d = new Date(dateObj);
-        return d.toLocaleDateString('pt-BR');
-    }
-    function todayMidnight() {
-        let today = new Date();
-        today.setHours(0,0,0,0);
-        return today;
-    }
-
-    // recalcula datas e status de UM cliente (baseado em configDias atual)
     function recalcCliente(cliente) {
-        if (!cliente.dataEntrada) return cliente;
         let entrada = new Date(cliente.dataEntrada);
         entrada.setHours(0,0,0,0);
         let dates = [];
         let prev = entrada;
-        for (let i = 0; i < configDias.length; i++) {
-            let nextDate = addDays(prev, configDias[i]);
-            dates.push(nextDate);
-            prev = nextDate;
+        for (let i=0; i<configDias.length; i++) {
+            let next = addDays(prev, configDias[i]);
+            dates.push(next);
+            prev = next;
         }
         cliente.datasFases = dates;
-        // se cliente estiver ativo: calcular progresso e status dinâmico
+        
         if (cliente.situacao === 'active') {
             const hoje = todayMidnight();
-            let completedCount = 0;
-            for (let dt of dates) {
-                if (dt < hoje) completedCount++;
-            }
-            let progresso = completedCount / 6;
-            cliente.progresso = progresso;
-            // status geral: atrasado / em breve / em dia
             let anyOverdue = dates.some(d => d < hoje);
             let anyNextWeek = dates.some(d => d >= hoje && d <= addDays(hoje, 7));
             if (anyOverdue) cliente.statusText = "🔴 Atrasado";
             else if (anyNextWeek) cliente.statusText = "🟡 Em breve";
             else cliente.statusText = "🟢 Em dia";
         } else {
-            // concluído ou cancelado: mantém status descritivo fixo
-            if (cliente.situacao === 'completed') cliente.statusText = "✅ Concluído";
-            else if (cliente.situacao === 'cancelled') cliente.statusText = "❌ Cancelado";
-            // progresso irrelevante, manter antigo ou 0
-            if(!cliente.progresso) cliente.progresso = 0;
+            cliente.statusText = cliente.situacao === 'completed' ? "✅ Concluído" : "❌ Cancelado";
         }
+        if (!cliente.checkboxes) cliente.checkboxes = new Array(6).fill(false);
         return cliente;
     }
 
-    function recalcAllClientes() {
+    function calcularProgresso(cliente) {
+        if (!cliente.checkboxes) return 0;
+        let concluidas = cliente.checkboxes.filter(c => c === true).length;
+        return concluidas / 6;
+    }
+
+    function recalcAll() {
         clientes = clientes.map(c => recalcCliente(c));
         saveToLocalStorage();
         renderAll();
     }
 
-    // salvar / carregar localStorage
     function saveToLocalStorage() {
         localStorage.setItem('implanta_clientes', JSON.stringify(clientes));
         localStorage.setItem('implanta_config', JSON.stringify(configDias));
     }
     function loadFromLocalStorage() {
         let storedCli = localStorage.getItem('implanta_clientes');
-        if (storedCli) {
-            clientes = JSON.parse(storedCli);
-            // recalc para garantir datas com config atual
-            clientes = clientes.map(c => recalcCliente(c));
-        } else {
-            clientes = [];
-        }
+        if (storedCli) clientes = JSON.parse(storedCli);
         let storedCfg = localStorage.getItem('implanta_config');
-        if (storedCfg) {
-            configDias = JSON.parse(storedCfg);
-        } else {
-            configDias = [...DEFAULT_DAYS];
-        }
+        if (storedCfg) configDias = JSON.parse(storedCfg);
+        clientes = clientes.map(c => recalcCliente(c));
     }
 
-    // ações principais
+    // CRUD
     function adicionarCliente(nome, dataEntradaStr, obs) {
-        if(!nome || !dataEntradaStr) return false;
+        if (!nome || !dataEntradaStr) return false;
         let newId = Date.now();
         let newClient = {
             id: newId,
@@ -448,7 +381,7 @@
             obs: obs || "",
             situacao: 'active',
             datasFases: [],
-            progresso: 0,
+            checkboxes: new Array(6).fill(false),
             statusText: "🟢 Em dia"
         };
         recalcCliente(newClient);
@@ -459,7 +392,7 @@
     }
 
     function excluirCliente(id) {
-        if(confirm("Remover este cliente permanentemente?")) {
+        if (confirm("Excluir permanentemente?")) {
             clientes = clientes.filter(c => c.id !== id);
             saveToLocalStorage();
             renderAll();
@@ -468,7 +401,7 @@
 
     function concluirImplantacao(id) {
         let idx = clientes.findIndex(c => c.id === id);
-        if(idx !== -1 && clientes[idx].situacao === 'active') {
+        if (idx !== -1 && clientes[idx].situacao === 'active') {
             clientes[idx].situacao = 'completed';
             recalcCliente(clientes[idx]);
             saveToLocalStorage();
@@ -478,7 +411,7 @@
 
     function cancelarCliente(id) {
         let idx = clientes.findIndex(c => c.id === id);
-        if(idx !== -1 && clientes[idx].situacao === 'active') {
+        if (idx !== -1 && clientes[idx].situacao === 'active') {
             clientes[idx].situacao = 'cancelled';
             recalcCliente(clientes[idx]);
             saveToLocalStorage();
@@ -486,109 +419,143 @@
         }
     }
 
-    function reativarCliente(id, novaSituacaoAlvo='active') {
+    function reativarCliente(id, novaSituacao) {
         let idx = clientes.findIndex(c => c.id === id);
-        if(idx !== -1 && (clientes[idx].situacao === 'completed' || clientes[idx].situacao === 'cancelled')) {
-            clientes[idx].situacao = novaSituacaoAlvo;
+        if (idx !== -1 && (clientes[idx].situacao === 'completed' || clientes[idx].situacao === 'cancelled')) {
+            clientes[idx].situacao = novaSituacao;
             recalcCliente(clientes[idx]);
             saveToLocalStorage();
             renderAll();
         }
     }
 
-    function editarCliente(id, novoNome, novaDataEntrada, novaObs) {
-        let cliente = clientes.find(c => c.id === id);
-        if(cliente) {
-            if(novoNome) cliente.nome = novoNome;
-            if(novaDataEntrada) cliente.dataEntrada = novaDataEntrada;
-            if(novaObs !== undefined) cliente.obs = novaObs;
-            recalcCliente(cliente);
+    function editarCliente(id, novoNome, novaData, novaObs) {
+        let c = clientes.find(c => c.id === id);
+        if (c) {
+            if (novoNome) c.nome = novoNome;
+            if (novaData) c.dataEntrada = novaData;
+            if (novaObs !== undefined) c.obs = novaObs;
+            recalcCliente(c);
             saveToLocalStorage();
             renderAll();
         }
     }
 
-    // ---------- RENDER TABELAS E DASHBOARD ----------
+    function toggleFase(clienteId, faseIndex) {
+        let c = clientes.find(c => c.id === clienteId);
+        if (c && c.situacao === 'active') {
+            c.checkboxes[faseIndex] = !c.checkboxes[faseIndex];
+            saveToLocalStorage();
+            renderAll();
+        }
+    }
+
+    function marcarTodasFases(clienteId) {
+        let c = clientes.find(c => c.id === clienteId);
+        if (c && c.situacao === 'active') {
+            c.checkboxes = new Array(6).fill(true);
+            saveToLocalStorage();
+            renderAll();
+        }
+    }
+
+    // Renderização
     function renderDashboard() {
         const ativos = clientes.filter(c => c.situacao === 'active');
         const total = ativos.length;
         const atrasados = ativos.filter(c => c.statusText === "🔴 Atrasado").length;
         const emBreve = ativos.filter(c => c.statusText === "🟡 Em breve").length;
         const emDia = ativos.filter(c => c.statusText === "🟢 Em dia").length;
-        const progressoMedio = ativos.length ? (ativos.reduce((acc,c) => acc + (c.progresso||0),0)/ativos.length)*100 : 0;
+        const progressoMedio = ativos.length ? (ativos.reduce((acc,c) => acc + calcularProgresso(c),0)/ativos.length)*100 : 0;
         const concluidos = clientes.filter(c => c.situacao === 'completed').length;
         const cancelados = clientes.filter(c => c.situacao === 'cancelled').length;
         document.getElementById('dashboardCards').innerHTML = `
-            <div class="card"><h3>TOTAL ATIVOS</h3><div class="value">${total}</div><div class="sub">em implantação</div></div>
-            <div class="card"><h3>🔴 ATRASADOS</h3><div class="value">${atrasados}</div><div class="sub">fases vencidas</div></div>
-            <div class="card"><h3>🟡 PRÓXIMOS 7 DIAS</h3><div class="value">${emBreve}</div><div class="sub">atenção</div></div>
-            <div class="card"><h3>🟢 EM DIA</h3><div class="value">${emDia}</div><div class="sub">no prazo</div></div>
-            <div class="card"><h3>📈 PROGRESSO MÉDIO</h3><div class="value">${Math.round(progressoMedio)}%</div><div class="sub">fases concluídas</div></div>
-            <div class="card"><h3>✅ CONCLUÍDOS</h3><div class="value">${concluidos}</div><div class="sub">implantações finalizadas</div></div>
-            <div class="card"><h3>❌ CANCELADOS</h3><div class="value">${cancelados}</div><div class="sub">desistências</div></div>
+            <div class="card"><h3>TOTAL ATIVOS</h3><div class="value">${total}</div></div>
+            <div class="card"><h3>🔴 ATRASADOS</h3><div class="value">${atrasados}</div></div>
+            <div class="card"><h3>🟡 PRÓXIMOS 7 DIAS</h3><div class="value">${emBreve}</div></div>
+            <div class="card"><h3>🟢 EM DIA</h3><div class="value">${emDia}</div></div>
+            <div class="card"><h3>📈 PROGRESSO MÉDIO</h3><div class="value">${Math.round(progressoMedio)}%</div></div>
+            <div class="card"><h3>✅ CONCLUÍDOS</h3><div class="value">${concluidos}</div></div>
+            <div class="card"><h3>❌ CANCELADOS</h3><div class="value">${cancelados}</div></div>
         `;
-        // resumo por fase (clientes ativos)
         const hoje = todayMidnight();
         const fasesResumo = FASE_NAMES.map((nome, idx) => {
-            let totalFase = 0;
-            let vencidos = 0;
-            let emBreveFase = 0;
-            let noPrazo = 0;
-            ativos.forEach(cli => {
+            let totalFase=0, vencidos=0, emBreveFase=0, noPrazo=0;
+            clientes.filter(c=>c.situacao==='active').forEach(cli => {
                 if(cli.datasFases && cli.datasFases[idx]) {
                     totalFase++;
-                    let dataFase = cli.datasFases[idx];
-                    if(dataFase < hoje) vencidos++;
-                    else if(dataFase <= addDays(hoje,7)) emBreveFase++;
+                    let data = cli.datasFases[idx];
+                    if(data < hoje) vencidos++;
+                    else if(data <= addDays(hoje,7)) emBreveFase++;
                     else noPrazo++;
                 }
             });
             return { nome, vencidos, emBreveFase, noPrazo, totalFase };
         });
         const tbody = document.querySelector('#resumoFasesTable tbody');
-        tbody.innerHTML = fasesResumo.map(f => `
-            <tr><td>${f.nome}</td><td><span class="badge red">${f.vencidos}</span></td>
-            <td><span class="badge yellow">${f.emBreveFase}</span></td><td><span class="badge green">${f.noPrazo}</span></td>
-            <td>${f.totalFase}</td></tr>
-        `).join('');
+        tbody.innerHTML = fasesResumo.map(f => `<tr><td>${f.nome}</td><td class="badge red">${f.vencidos}</td><td class="badge yellow">${f.emBreveFase}</td><td class="badge green">${f.noPrazo}</td><td>${f.totalFase}</td></tr>`).join('');
     }
 
-    function renderTabelaClientes(filtroSituacao, containerId, showReativar = false, allowActions = true) {
-        let lista = clientes.filter(c => c.situacao === filtroSituacao);
+    function renderTabelaClientes(filtro, containerId, showReativar=false, allowActions=true) {
+        let lista = clientes.filter(c => c.situacao === filtro);
         if(lista.length===0) {
-            document.getElementById(containerId).innerHTML = `<div style="padding: 30px; text-align:center;">Nenhum cliente ${filtroSituacao==='active'?'ativo':(filtroSituacao==='completed'?'concluído':'cancelado')}.</div>`;
+            document.getElementById(containerId).innerHTML = `<div style="padding:30px;text-align:center;">Nenhum cliente ${filtro==='active'?'ativo':(filtro==='completed'?'concluído':'cancelado')}.</div>`;
             return;
         }
-        let html = `<table><thead><tr><th>Cliente</th><th>Entrada</th>${FASE_NAMES.map(f=>`<th>${f}</th>`).join('')}<th>Progresso</th><th>Status</th><th>Ações</th></tr></thead><tbody>`;
+        let html = `<table><thead><tr><th>Cliente</th><th>Entrada</th><th>Obs</th>`;
+        for(let fase of FASE_NAMES) html += `<th>${fase}</th>`;
+        html += `<th>Progresso</th><th>Status</th><th>Ações</th></tr></thead><tbody>`;
+        
         for(let cli of lista) {
-            let progressPercent = Math.round((cli.progresso||0)*100);
+            let progresso = calcularProgresso(cli);
+            let percent = Math.round(progresso*100);
             html += `<tr>
-                <td><strong>${escapeHtml(cli.nome)}</strong><br><small style="color:#5e7e8f;">${escapeHtml(cli.obs||'')}</small></td>
-                <td>${formatDate(cli.dataEntrada)}</td>`;
+                        <td style="text-align:left"><strong>${escapeHtml(cli.nome)}</strong></td>
+                        <td style="text-align:left">${formatDate(cli.dataEntrada)}</td>
+                        <td style="text-align:left; max-width:150px; white-space:normal;">${escapeHtml(cli.obs||'')}</td>`;
+            
             for(let i=0; i<FASE_NAMES.length; i++) {
                 let data = cli.datasFases ? cli.datasFases[i] : null;
                 let dataStr = data ? formatDate(data) : '';
-                let cor = '';
-                if(data && filtroSituacao==='active'){
+                let corData = '';
+                if(data && cli.situacao === 'active'){
                     let hoje = todayMidnight();
-                    if(data<hoje) cor = 'style="color:#bc1c2e;font-weight:500;"';
-                    else if(data<=addDays(hoje,7)) cor = 'style="color:#b45f06;"';
+                    if(data < hoje) corData = 'style="color:#bc1c2e;font-weight:500;"';
+                    else if(data <= addDays(hoje,7)) corData = 'style="color:#b45f06;"';
                 }
-                html += `<td ${cor}>${dataStr}</td>`;
+                let isConcluido = cli.checkboxes && cli.checkboxes[i];
+                let icone = isConcluido ? '✅' : '⬜';
+                let title = isConcluido ? 'Clique para desmarcar' : 'Clique para marcar como concluído';
+                
+                if (cli.situacao === 'active') {
+                    html += `<td style="vertical-align:middle;">
+                                <div class="data-fase" ${corData}>${dataStr}</div>
+                                <div class="fase-status" onclick="toggleFase(${cli.id}, ${i})" title="${title}">
+                                    ${icone} ${isConcluido ? 'Concluído' : 'Pendente'}
+                                </div>
+                             </td>`;
+                } else {
+                    // Para concluídos/cancelados, mostra só a data e um indicador se foi feito
+                    html += `<td style="vertical-align:middle;">
+                                <div class="data-fase" ${corData}>${dataStr}</div>
+                                <div style="font-size:0.7rem;">${isConcluido ? '✅ feito' : '⬜ pendente'}</div>
+                             </td>`;
+                }
             }
-            html += `<td><div class="progress-bar"><div class="progress-fill" style="width:${progressPercent}%;"></div></div> ${progressPercent}%</td>
-            <td><span class="badge ${cli.statusText.includes('Atrasado')?'red':(cli.statusText.includes('Em breve')?'yellow':'green')}">${cli.statusText}</span></td>
-            <td class="action-group">`;
-            if(allowActions && filtroSituacao === 'active') {
-                html += `<button class="btn-icon" title="Concluir implantação" onclick="concluirImplantacao(${cli.id})">✅</button>
-                         <button class="btn-icon" title="Cancelar cliente (desistência)" onclick="cancelarCliente(${cli.id})">❌</button>
-                         <button class="btn-icon" title="Editar cliente" onclick="abrirModalEditar(${cli.id})">✏️</button>
-                         <button class="btn-icon btn-danger" title="Excluir" onclick="excluirCliente(${cli.id})">🗑️</button>`;
+            html += `<td><div class="progress-bar"><div class="progress-fill" style="width:${percent}%;"></div></div> ${percent}%</td>
+                      <td><span class="badge ${cli.statusText.includes('Atrasado')?'red':(cli.statusText.includes('Em breve')?'yellow':'green')}">${cli.statusText}</span></td>
+                      <td class="action-group">`;
+            if(allowActions && cli.situacao === 'active') {
+                html += `<button class="btn-icon" onclick="marcarTodasFases(${cli.id})" title="Marcar todas as etapas">✔️ Todas</button>
+                         <button class="btn-icon" onclick="concluirImplantacao(${cli.id})">✅ Concluir</button>
+                         <button class="btn-icon" onclick="cancelarCliente(${cli.id})">❌ Cancelar</button>
+                         <button class="btn-icon" onclick="abrirModalEditar(${cli.id})">✏️</button>
+                         <button class="btn-icon" onclick="excluirCliente(${cli.id})">🗑️</button>`;
             } else if(showReativar) {
-                html += `<button class="btn-icon" title="Reativar cliente" onclick="reativarCliente(${cli.id}, 'active')">🔄 Reativar</button>
-                         <button class="btn-icon btn-danger" title="Excluir permanentemente" onclick="excluirCliente(${cli.id})">🗑️</button>`;
+                html += `<button class="btn-icon" onclick="reativarCliente(${cli.id}, 'active')">🔄 Reativar</button>
+                         <button class="btn-icon" onclick="excluirCliente(${cli.id})">🗑️</button>`;
             } else {
-                html += `<button class="btn-icon" title="Excluir" onclick="excluirCliente(${cli.id})">🗑️ Excluir</button>`;
+                html += `<button class="btn-icon" onclick="excluirCliente(${cli.id})">🗑️</button>`;
             }
             html += `</td></tr>`;
         }
@@ -606,115 +573,96 @@
 
     function renderConfiguracoes() {
         const container = document.getElementById('configFields');
-        container.innerHTML = FASE_NAMES.map((nome, idx) => `
-            <div class="field"><label>${nome}</label><input type="number" id="cfg_${idx}" value="${configDias[idx]}" min="0" step="1"></div>
-        `).join('');
+        container.innerHTML = FASE_NAMES.map((nome, idx) => `<div class="field"><label>${nome}</label><input type="number" id="cfg_${idx}" value="${configDias[idx]}" min="0" step="1"></div>`).join('');
     }
 
     function saveConfig() {
         let newDays = [];
-        for(let i=0; i<FASE_NAMES.length; i++) {
-            let val = parseInt(document.getElementById(`cfg_${i}`).value);
-            if(isNaN(val)) val = DEFAULT_DAYS[i];
-            newDays.push(val);
+        for(let i=0;i<FASE_NAMES.length;i++) {
+            let v = parseInt(document.getElementById(`cfg_${i}`).value);
+            if(isNaN(v)) v = [7,5,10,15,10,3][i];
+            newDays.push(v);
         }
         configDias = newDays;
         saveToLocalStorage();
-        recalcAllClientes();  // recalcula todos os clientes com prazos novos
-        renderAll();
-        alert('Prazos atualizados e todas as datas recalculadas!');
+        recalcAll();
     }
 
-    // MODAL lógica
+    // Modal
     let modal = document.getElementById('clienteModal');
     function fecharModal() { modal.style.display = 'none'; }
-    function abrirModalNovo() {
+    window.abrirModalEditar = (id) => {
+        let cli = clientes.find(c=>c.id===id);
+        if(cli) {
+            document.getElementById('modalTitle').innerText = 'Editar Cliente';
+            document.getElementById('editClientId').value = cli.id;
+            document.getElementById('clienteNome').value = cli.nome;
+            document.getElementById('clienteDataEntrada').value = cli.dataEntrada;
+            document.getElementById('clienteObs').value = cli.obs||'';
+            modal.style.display = 'flex';
+        }
+    };
+    document.getElementById('btnNovoCliente').onclick = () => {
         document.getElementById('modalTitle').innerText = 'Novo Cliente';
         document.getElementById('editClientId').value = '';
         document.getElementById('clienteNome').value = '';
         document.getElementById('clienteDataEntrada').value = '';
         document.getElementById('clienteObs').value = '';
         modal.style.display = 'flex';
-    }
-    window.abrirModalEditar = (id) => {
-        let cli = clientes.find(c => c.id === id);
-        if(cli) {
-            document.getElementById('modalTitle').innerText = 'Editar Cliente';
-            document.getElementById('editClientId').value = cli.id;
-            document.getElementById('clienteNome').value = cli.nome;
-            document.getElementById('clienteDataEntrada').value = cli.dataEntrada;
-            document.getElementById('clienteObs').value = cli.obs || '';
-            modal.style.display = 'flex';
-        }
     };
     document.getElementById('modalConfirm').onclick = () => {
         let idEditar = document.getElementById('editClientId').value;
         let nome = document.getElementById('clienteNome').value.trim();
-        let dataEntrada = document.getElementById('clienteDataEntrada').value;
+        let data = document.getElementById('clienteDataEntrada').value;
         let obs = document.getElementById('clienteObs').value;
-        if(!nome || !dataEntrada) { alert("Preencha nome e data de entrada"); return; }
-        if(idEditar) {
-            editarCliente(parseInt(idEditar), nome, dataEntrada, obs);
-        } else {
-            adicionarCliente(nome, dataEntrada, obs);
-        }
+        if(!nome || !data) { alert("Preencha nome e data de entrada"); return; }
+        if(idEditar) editarCliente(parseInt(idEditar), nome, data, obs);
+        else adicionarCliente(nome, data, obs);
         fecharModal();
     };
     document.getElementById('modalCancel').onclick = fecharModal;
     window.onclick = (e) => { if(e.target === modal) fecharModal(); };
 
-    // TABS
+    // Tabs
     function switchTab(tabId) {
         document.querySelectorAll('.tab-content').forEach(t => t.style.display = 'none');
         document.getElementById(`${tabId}Tab`).style.display = 'block';
         document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
         document.querySelector(`.tab-btn[data-tab="${tabId}"]`).classList.add('active');
         if(tabId === 'settings') renderConfiguracoes();
-        else renderAll(); // atualiza dados
+        else renderAll();
     }
-    document.querySelectorAll('.tab-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            let tab = btn.getAttribute('data-tab');
-            switchTab(tab);
-        });
-    });
+    document.querySelectorAll('.tab-btn').forEach(btn => btn.addEventListener('click', (e) => switchTab(e.target.dataset.tab)));
 
-    // import exemplo (clientes fictícios similar ao excel)
     function importarExemplo() {
-        if(confirm("Carregar clientes exemplo? (irá adicionar à lista atual)")) {
+        if(confirm("Adicionar clientes de exemplo?")) {
             const exemplos = [
-                { nome: "VEM BRINCAR", entrada: "2025-11-05", obs: "Contato inicial" },
-                { nome: "OFICINA DE BRINQUEDOS", entrada: "2025-11-19", obs: "" },
+                { nome: "VEM BRINCAR", entrada: "2025-11-05", obs: "" },
                 { nome: "PETIT GOURMET", entrada: "2026-01-15", obs: "" },
-                { nome: "COZINHA DO PATRÃO", entrada: "2026-01-16", obs: "Módulo completo" },
-                { nome: "HAPPY MUNDI", entrada: "2026-01-17", obs: "" },
-                { nome: "UNIÃO EVENTOS", entrada: "2026-01-19", obs: "Aguardando dados" },
-                { nome: "MARISTELA DOCES", entrada: "2026-01-19", obs: "Cliente não responde" }
+                { nome: "COZINHA DO PATRÃO", entrada: "2026-01-16", obs: "Módulo completo" }
             ];
             for(let ex of exemplos) {
-                if(!clientes.some(c => c.nome === ex.nome)) {
-                    adicionarCliente(ex.nome, ex.entrada, ex.obs);
-                }
+                if(!clientes.some(c=>c.nome===ex.nome)) adicionarCliente(ex.nome, ex.entrada, ex.obs);
             }
             renderAll();
         }
     }
-
-    function escapeHtml(str) { return str.replace(/[&<>]/g, function(m){if(m==='&') return '&amp;'; if(m==='<') return '&lt;'; if(m==='>') return '&gt;'; return m;}); }
-
-    // bootstrap inicial
-    loadFromLocalStorage();
-    recalcAllClientes(); // garante consistência
-    renderAll();
-    // eventos
-    document.getElementById('btnNovoCliente')?.addEventListener('click', abrirModalNovo);
     document.getElementById('btnImportExemplo')?.addEventListener('click', importarExemplo);
     document.getElementById('saveConfigBtn')?.addEventListener('click', saveConfig);
+
+    // Expor funções globais
     window.excluirCliente = excluirCliente;
     window.concluirImplantacao = concluirImplantacao;
     window.cancelarCliente = cancelarCliente;
     window.reativarCliente = reativarCliente;
+    window.toggleFase = toggleFase;
+    window.marcarTodasFases = marcarTodasFases;
+    function escapeHtml(str) { return str.replace(/[&<>]/g, m => m==='&'?'&amp;':m==='<'?'&lt;':'&gt;'); }
+
+    loadFromLocalStorage();
+    recalcAll();
     switchTab('dashboard');
 </script>
 </body>
 </html>
+Adiciona checkpoints por fase
